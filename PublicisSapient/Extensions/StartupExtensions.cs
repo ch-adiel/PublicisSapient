@@ -23,6 +23,11 @@ namespace PublicisSapient.Extensions
             services.AddAutoMapper(typeof(Startup));
         }
 
+        public static void ConfigureExceptionHandler(this IApplicationBuilder app)
+        {
+            app.UseMiddleware<ExceptionMiddleware>();
+        }
+
         public static void AddSwagger(this IServiceCollection services)
         {
             services.AddSwaggerGen(options =>

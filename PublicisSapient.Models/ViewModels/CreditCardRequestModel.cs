@@ -8,8 +8,10 @@ namespace PublicisSapient.Models.ViewModels
         [Required]
         public string CardName { get; set; }
         [Required]
+        [CardNumberValidator]
         public string CardNumber { get; set; }
         [Required]
+        [CardLimitValidator(0)]
         public decimal CardLimit { get; set; }
     }
 }

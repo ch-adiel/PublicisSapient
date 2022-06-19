@@ -25,6 +25,10 @@ namespace PublicisSapient
             services.AddDbContext<PublicisSapientContext>(options =>
                 options.UseInMemoryDatabase("PublicisSapientDB"));
             services.AddScoped<PublicisSapientContext>();
+
+            services.AddAutoMapper();
+            services.AddSwagger();
+            services.AddRepositories();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -34,6 +38,8 @@ namespace PublicisSapient
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.ConfigureExceptionHandler();
 
             app.UseRouting();
 
