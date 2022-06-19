@@ -4,6 +4,7 @@ using PublicisSapient.Models;
 using PublicisSapient.Models.ViewModels;
 using PublicisSapient.Repositories.Interfaces;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PublicisSapient.Controllers
 {
@@ -25,11 +26,22 @@ namespace PublicisSapient.Controllers
         {
             var response = new Response<CreditCard>();
             var entity = _mapper.Map<CreditCard>(model);
+            var existingCard = _repository.Get(c => c.CardNumber == model.CardNumber).FirstOrDefault();
+            if(existingCard != null)
+            {
+                response.Status = false;
+                response.StatusCode = 204;
+                response.Message = "Card already exists";
+                response.Data = existingCard;
+
+                return response;
+            }
+
             _repository.Insert(entity);
             response.StatusCode = 200;
             response.Status = true;
             response.Data = entity;
-            response.Message = "Success.";
+            response.Message = "Success";
 
             return response;
         }
@@ -51,7 +63,7 @@ namespace PublicisSapient.Controllers
 
             response.StatusCode = 200;
             response.Status = true;
-            response.Message = "Success.";
+            response.Message = "Success";
 
             return response;
         }
