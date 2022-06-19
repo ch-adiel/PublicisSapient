@@ -1,5 +1,4 @@
-﻿using PublicisSapient.Models.ValidationAttributes;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace PublicisSapient.Models

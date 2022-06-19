@@ -38,18 +38,18 @@ namespace PublicisSapient
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseHttpsRedirection();
 
             app.ConfigureExceptionHandler();
 
             app.UseRouting();
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
-
+            app.UseCors("*");
             app.UseSwagger();
             app.UseSwaggerUI(options => options.SwaggerEndpoint("/swagger/v2/swagger.json", "Publicis Sapient"));
         }
