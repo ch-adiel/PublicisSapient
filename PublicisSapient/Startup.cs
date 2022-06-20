@@ -21,6 +21,16 @@ namespace PublicisSapient
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(
+                  "CorsPolicy",
+                  builder => builder.AllowAnyOrigin()
+                  .AllowAnyMethod()
+                  .AllowAnyHeader()
+                  );
+            });
+
             services.AddControllers();
             services.AddDbContext<PublicisSapientContext>(options =>
                 options.UseInMemoryDatabase("PublicisSapientDB"));
@@ -38,18 +48,17 @@ namespace PublicisSapient
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseHttpsRedirection();
 
             app.ConfigureExceptionHandler();
 
             app.UseRouting();
+            app.UseCors("CorsPolicy");
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
-            app.UseCors("*");
             app.UseSwagger();
             app.UseSwaggerUI(options => options.SwaggerEndpoint("/swagger/v2/swagger.json", "Publicis Sapient"));
         }
